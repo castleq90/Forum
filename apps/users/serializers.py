@@ -25,12 +25,10 @@ class UserSignInSerializer(serializers.Serializer):
     email        = serializers.EmailField()
     password     = serializers.CharField(write_only=True)
     access_token = serializers.ReadOnlyField()
-    refresh_token = serializers.ReadOnlyField()
-
 
     def validate(self, attrs):
         user = authenticate(**attrs)
         token = RefreshToken.for_user(user)
         attrs['id'] = user.id
-        attrs['access_token'] = str(token)
+        attrs['access_token'] = str(token.access_token)
         return attrs
