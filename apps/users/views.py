@@ -1,7 +1,5 @@
 from rest_framework                  import mixins, viewsets, status
 from rest_framework.response         import Response
-from rest_framework_simplejwt.tokens import RefreshToken
-from apps.users import serializers
 
 from apps.users.serializers import UserSignInSerializer, UserSignUpSerializer
 from apps.users.models      import User
