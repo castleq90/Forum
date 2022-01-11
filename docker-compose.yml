@@ -1,0 +1,33 @@
+version: "3.9"
+  
+volumes:
+  local_postgres_data: {}
+
+services:
+  postgres:
+    restart: always
+    image: postgres:13.1
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data:Z
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  django:
+    restart: always
+    build: .
+    command: >
+      bash -c "./manage.py makemigrations &&
+              ./manage.py migrate &&
+              ./manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SECRET_KEY=forum
+    depends_on:
+      - postgres
