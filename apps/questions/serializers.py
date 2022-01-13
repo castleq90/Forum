@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from apps.questions.models import Question
+from apps.questions.models import Comment, Question
 
 class QuestionSerializer(serializers.ModelSerializer):
         class Meta:
@@ -12,3 +12,8 @@ class QuestionSerializer(serializers.ModelSerializer):
         def create(self, validated_data):
             user = self.context['request'].user
             return Question.objects.create(user=user, **validated_data)
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model =Comment
+        fields = ['id', 'question', 'user', 'create_at', 'update_at', 'comment']

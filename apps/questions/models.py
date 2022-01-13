@@ -13,6 +13,9 @@ class Question(models.Model):
     class Meta:
         db_table = 'questions'
 
+    def __str__(self):
+        return self.title
+
 class Comment(models.Model):
     comment   = models.CharField(max_length=300)
     create_at = models.DateTimeField(auto_now_add=True)
@@ -22,6 +25,9 @@ class Comment(models.Model):
 
     class Meta:
         db_table = 'comments'
+
+    def __str__(self):
+        return self.comment
 
 class Like(models.Model):
     create_at  = models.DateTimeField(auto_now_add=True)
